@@ -92,6 +92,16 @@ class CartsControllerTest extends MyWebTestCase
                     ]
                 ],
             ],
+            'not existing cart' => [
+                100,
+                Response::HTTP_BAD_REQUEST,
+                [
+                    'errors' => [
+                        'property' => '',
+                        'message' => 'Cart for given id does not exist.',
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -179,6 +189,28 @@ class CartsControllerTest extends MyWebTestCase
                     'errors' => [
                         'property' => '',
                         'message' => 'Limit of products on the cart exceeded.',
+                    ],
+                ],
+            ],
+            'add product 100 to cart 1' => [
+                1,
+                100,
+                Response::HTTP_BAD_REQUEST,
+                [
+                    'errors' => [
+                        'property' => '',
+                        'message' => 'Product for given id does not exist.',
+                    ],
+                ],
+            ],
+            'add product 1 to cart 100' => [
+                100,
+                1,
+                Response::HTTP_BAD_REQUEST,
+                [
+                    'errors' => [
+                        'property' => '',
+                        'message' => 'Cart for given id does not exist.',
                     ],
                 ],
             ],
@@ -276,6 +308,28 @@ class CartsControllerTest extends MyWebTestCase
                     'errors' => [
                         'property' => '',
                         'message' => 'Cannot remove not existing product from the cart.',
+                    ],
+                ],
+            ],
+            'remove product 100 from cart 1' => [
+                1,
+                100,
+                Response::HTTP_BAD_REQUEST,
+                [
+                    'errors' => [
+                        'property' => '',
+                        'message' => 'Product for given id does not exist.',
+                    ],
+                ],
+            ],
+            'remove product 1 from cart 100' => [
+                100,
+                1,
+                Response::HTTP_BAD_REQUEST,
+                [
+                    'errors' => [
+                        'property' => '',
+                        'message' => 'Cart for given id does not exist.',
                     ],
                 ],
             ],

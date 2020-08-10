@@ -53,7 +53,7 @@ class CartsController extends AbstractFOSRestController
     /**
      * Get cart.
      *
-     * @param Cart $cart
+     * @param Cart|null $cart
      *
      * @return View
      *
@@ -71,9 +71,13 @@ class CartsController extends AbstractFOSRestController
      *     @Model(type=Cart::class)
      * )
      */
-    public function getCartAction(Cart $cart): View
+    public function getCartAction(?Cart $cart = null): View
     {
         try {
+            if (!$cart instanceof Cart) {
+                throw new InvalidArgumentException('Cart for given id does not exist.');
+            }
+
             return $this->view(
                 $cart,
                 Response::HTTP_OK
@@ -108,8 +112,8 @@ class CartsController extends AbstractFOSRestController
     /**
      * Add product to cart.
      *
-     * @param Cart $cart
-     * @param Product $product
+     * @param Cart|null $cart
+     * @param Product|null $product
      *
      * @return View
      *
@@ -134,9 +138,17 @@ class CartsController extends AbstractFOSRestController
      *     @Model(type=Cart::class)
      * )
      */
-    public function addCartProductAction(Cart $cart, Product $product): View
+    public function addCartProductAction(?Cart $cart = null, ?Product $product = null): View
     {
         try {
+            if (!$cart instanceof Cart) {
+                throw new InvalidArgumentException('Cart for given id does not exist.');
+            }
+
+            if (!$product instanceof Product) {
+                throw new InvalidArgumentException('Product for given id does not exist.');
+            }
+
             if (!$cart->isAvailableToAddProduct()) {
                 throw new InvalidArgumentException('Limit of products on the cart exceeded.');
             }
@@ -152,8 +164,8 @@ class CartsController extends AbstractFOSRestController
     /**
      * Remove product from cart.
      *
-     * @param Cart $cart
-     * @param Product $product
+     * @param Cart|null $cart
+     * @param Product|null $product
      *
      * @return View
      *
@@ -178,9 +190,17 @@ class CartsController extends AbstractFOSRestController
      *     @Model(type=Cart::class)
      * )
      */
-    public function patchCartProductRemoveAction(Cart $cart, Product $product): View
+    public function patchCartProductRemoveAction(?Cart $cart = null, ?Product $product = null): View
     {
         try {
+            if (!$cart instanceof Cart) {
+                throw new InvalidArgumentException('Cart for given id does not exist.');
+            }
+
+            if (!$product instanceof Product) {
+                throw new InvalidArgumentException('Product for given id does not exist.');
+            }
+
             if (!$cart->containsProduct($product)) {
                 throw new InvalidArgumentException('Cannot remove not existing product from the cart.');
             }

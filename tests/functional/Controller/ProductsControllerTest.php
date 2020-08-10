@@ -395,6 +395,19 @@ class ProductsControllerTest extends MyWebTestCase
                     ]
                 ],
             ],
+            'not existing product' => [
+                100,
+                'Not existing',
+                1234,
+                'ZZZ',
+                Response::HTTP_BAD_REQUEST,
+                [
+                    'errors' => [
+                        'property' => '',
+                        'message' => 'Product for given id does not exist.',
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -407,5 +420,24 @@ class ProductsControllerTest extends MyWebTestCase
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NO_CONTENT);
         $this->assertNull($this->decodeResponse($client->getResponse()));
+    }
+
+    public function testDeleteProductsFailed() {
+        $client = static::createClient();
+        $client->request(
+            'DELETE',
+            sprintf('/api/products/%s', 100)
+        );
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
+        $this->assertEquals(
+            [
+                'errors' => [
+                    'property' => '',
+                    'message' => 'Product for given id does not exist.',
+                ],
+            ],
+            $this->decodeResponse($client->getResponse())
+        );
     }
 }

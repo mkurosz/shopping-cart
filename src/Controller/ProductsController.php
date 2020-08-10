@@ -10,6 +10,7 @@ use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\View\View;
+use InvalidArgumentException;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Swagger\Annotations as OA;
@@ -126,13 +127,13 @@ class ProductsController extends AbstractFOSRestController
     /**
      * Update product.
      *
-     * @param Product $product
      * @param ProductInput $productInput
+     * @param Product|null $product
      *
      * @return View
      *
-     * @ParamConverter("product")
      * @ParamConverter("productInput", converter="fos_rest.request_body")
+     * @ParamConverter("product")
      *
      * @OA\Response(
      *     response=200,
@@ -140,9 +141,13 @@ class ProductsController extends AbstractFOSRestController
      *     @Model(type=Product::class)
      * )
      */
-    public function patchProductAction(Product $product, ProductInput $productInput): View
+    public function patchProductAction(ProductInput $productInput, ?Product $product = null): View
     {
         try {
+            if (!$product instanceof Product) {
+                throw new InvalidArgumentException('Product for given id does not exist.');
+            }
+
             $validationErrors = $this->validator->validate($productInput, null, ['Default', 'UpdateProduct']);
 
             if ($validationErrors->count()) {
@@ -160,7 +165,7 @@ class ProductsController extends AbstractFOSRestController
     /**
      * Delete product.
      *
-     * @param Product $product
+     * @param Product|null $product
      *
      * @return View
      *
@@ -171,9 +176,13 @@ class ProductsController extends AbstractFOSRestController
      *     description="Returns http no content.",
      * )
      */
-    public function deleteProductAction(Product $product): View
+    public function deleteProductAction(?Product $product = null): View
     {
         try {
+            if (!$product instanceof Product) {
+                throw new InvalidArgumentException('Product for given id does not exist.');
+            }
+
             $this->productCrudManger->delete($product);
 
             return $this->view([], Response::HTTP_NO_CONTENT);
