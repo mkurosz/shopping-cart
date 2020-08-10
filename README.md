@@ -1,22 +1,22 @@
 # shopping-cart
-Sample shopping cart application with an API
+Sample shopping cart application with API
 
 Installation process
 --------------------
 
-1. invoke in shell:
+Invoke in shell:
 
 ```
 $ git clone git@github.com:mkurosz/shopping-cart.git
 ```
 
-2. copy .env.dist file to .env:
+Copy .env.dist file to .env:
 
 ```
 $ cp .env.dist .env
 ```
 
-3. edit .env file.
+edit .env file.
 
 In this file you'll find following variable:
 
@@ -26,20 +26,54 @@ DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name
 
 Fill this line by your db connection data.
 
-4. install dependencies:
+Install dependencies:
 
 ```
 $ composer install
 ```
 
-5. create database structure:
+Create database structure:
 
 ```
 $ php bin/console doctrine:schema:update --force
 ```
 
-6. load fixtures:
+Load fixtures:
 
 ```
 $ php bin/console doctrine:fixtures:load
 ```
+
+Running tests
+--------------------
+
+Drop previous test db:
+
+```
+$ php bin/console doctrine:schema:drop --env=test --force
+```
+
+Create again test db:
+
+```
+$ php bin/console doctrine:schema:create --env=test
+```
+
+Create database structure:
+
+```
+$ php bin/console doctrine:schema:update --force
+```
+
+Load fixtures:
+
+```
+$ php bin/console doctrine:fixtures:load --env=test
+```
+
+Run tests:
+
+```
+$ php bin/phpunit
+```
+
