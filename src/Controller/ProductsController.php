@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Dto\ProductInput;
 use App\Entity\Product;
-use App\Service\ProductCrudManger;
+use App\Service\ProductCrudManager;
 use Exception;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
@@ -14,7 +14,6 @@ use Nelmio\ApiDocBundle\Annotation\Model;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Swagger\Annotations as OA;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -27,7 +26,7 @@ class ProductsController extends AbstractFOSRestController
     /**
      * Cart CRUD manager.
      *
-     * @var ProductCrudManger
+     * @var ProductCrudManager
      */
     private $productCrudManger;
 
@@ -39,13 +38,13 @@ class ProductsController extends AbstractFOSRestController
     private $validator;
 
     /**
-     * CartsController constructor.
+     * ProductsController constructor.
      *
-     * @param ProductCrudManger $productCrudManger
+     * @param ProductCrudManager $productCrudManger
      * @param ValidatorInterface $validator
      */
     public function __construct(
-        ProductCrudManger $productCrudManger,
+        ProductCrudManager $productCrudManger,
         ValidatorInterface $validator
     ) {
         $this->productCrudManger = $productCrudManger;

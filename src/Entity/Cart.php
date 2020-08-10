@@ -24,6 +24,13 @@ class Cart implements TimestampableInterface
     use TimestampableTrait;
 
     /**
+     * Max number of products.
+     *
+     * @var int
+     */
+    private const MAX_NUMBER_OF_PRODUCTS = 3;
+
+    /**
      * Id.
      *
      * @var int
@@ -145,7 +152,7 @@ class Cart implements TimestampableInterface
      */
     public function isAvailableToAddProduct(): bool
     {
-        return $this->getNumberOfProducts() < 3;
+        return $this->getNumberOfProducts() < self::MAX_NUMBER_OF_PRODUCTS;
     }
 
     /**
@@ -200,9 +207,9 @@ class Cart implements TimestampableInterface
     /**
      * Returns total number of products on the cart.
      *
-     * @return bool
+     * @return int
      */
-    private function getNumberOfProducts(): bool
+    private function getNumberOfProducts(): int
     {
         $total = 0;
 

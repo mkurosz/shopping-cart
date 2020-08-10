@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Dto\ProductInput;
 use App\Entity\Product;
+use App\ReadModel\ListingResult;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -11,7 +12,7 @@ use Psr\Log\LoggerInterface;
 /**
  * Product CRUD manager.
  */
-class ProductCrudManger extends AbstractCrudManger
+class ProductCrudManager extends AbstractCrudManger
 {
     /**
      * Default items per page.
@@ -48,16 +49,19 @@ class ProductCrudManger extends AbstractCrudManger
      * @param int $page
      * @param int $itemsPerPage
      *
-     * @return Product[]
+     * @return ListingResult
      */
-    public function getProducts(int $page = 1, int $itemsPerPage = self::DEFAULT_ITEMS_PER_PAGE): array
+    public function getProducts(int $page = 1, int $itemsPerPage = self::DEFAULT_ITEMS_PER_PAGE): ListingResult
     {
-        return $this->productRepository->findBy(
-            [],
-            ['id' => 'ASC'],
-            $itemsPerPage,
-            ($page - 1) * $itemsPerPage
-        );
+        $productsPaginator = $this->productRepository->getProducts($page, $itemsPerPage);
+
+        $result = new ListingResult([], $productsPaginator->count(), $itemsPerPage);
+
+        foreach ($productsPaginator as $product) {
+            $result->addItem($product);
+        }
+
+        return $result;
     }
 
     /**

@@ -82,35 +82,10 @@ abstract class AbstractCrudManger
      * @param object $entity The instance to remove.
      *
      * @return void
-     *
-     * @throws RuntimeException Thrown when removal of new entity fails.
      */
     public function removeEntity($entity): void
     {
-        $this->entityManager->beginTransaction();
-
-        try {
-            $this->entityManager->remove($entity);
-            $this->entityManager->flush();
-            $this->entityManager->commit();
-        } catch (Throwable $e) {
-            $this->entityManager->rollback();
-            $this->logger->error(
-                $e->getMessage(),
-                [
-                    'message' => $e->getPrevious() ? $e->getPrevious()->getMessage() : $e->getMessage(),
-                    'trace' => $e->getTraceAsString(),
-                    'previous_trace' => $e->getPrevious() ? $e->getPrevious()->getTraceAsString() : null,
-                ]
-            );
-
-            throw new RuntimeException(
-                sprintf(
-                    'An error occurred while trying to remove %s.',
-                    get_class($entity)
-                ),
-                500
-            );
-        }
+        $this->entityManager->remove($entity);
+        $this->entityManager->flush();
     }
 }

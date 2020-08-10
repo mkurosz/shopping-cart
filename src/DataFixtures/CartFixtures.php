@@ -31,14 +31,14 @@ class CartFixtures extends Fixture implements DependentFixtureInterface
         $productTheTrial = $this->getReference(ProductFixtures::THE_TRIAL);
 
         $cart1 = new Cart();
-        $cart1->addProduct($productGodfather);
-        $cart1->addProduct($productGodfather);
-        $cart1->addProduct($productSteveJobs);
+        $cart1->addProduct($productSherlockHolmes);
+        $cart1->addProduct($productTheTrial);
         $manager->persist($cart1);
 
         $cart2 = new Cart();
-        $cart2->addProduct($productSherlockHolmes);
-        $cart2->addProduct($productTheTrial);
+        $cart2->addProduct($productGodfather);
+        $cart2->addProduct($productGodfather);
+        $cart2->addProduct($productSteveJobs);
         $manager->persist($cart2);
 
         $cart3 = new Cart();

@@ -2,6 +2,18 @@
     "brick/math": {
         "version": "0.8.15"
     },
+    "dama/doctrine-test-bundle": {
+        "version": "4.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "4.0",
+            "ref": "56eaa387b5e48ebcc7c95a893b47dfa1ad51449c"
+        },
+        "files": [
+            "./config/packages/test/dama_doctrine_test_bundle.yaml"
+        ]
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -185,6 +197,9 @@
     "symfony/asset": {
         "version": "v5.1.3"
     },
+    "symfony/browser-kit": {
+        "version": "v5.1.3"
+    },
     "symfony/cache": {
         "version": "v5.1.3"
     },
@@ -213,6 +228,9 @@
         "version": "v2.1.3"
     },
     "symfony/doctrine-bridge": {
+        "version": "v5.1.3"
+    },
+    "symfony/dom-crawler": {
         "version": "v5.1.3"
     },
     "symfony/dotenv": {
@@ -272,6 +290,21 @@
     },
     "symfony/options-resolver": {
         "version": "v5.1.3"
+    },
+    "symfony/phpunit-bridge": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "6d0e35f749d5f4bfe1f011762875275cd3f9874f"
+        },
+        "files": [
+            "./.env.test",
+            "./bin/phpunit",
+            "./phpunit.xml.dist",
+            "./tests/bootstrap.php"
+        ]
     },
     "symfony/polyfill-intl-grapheme": {
         "version": "v1.18.1"
